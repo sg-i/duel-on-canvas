@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Duel } from './Duel';
+import { Duel } from './Duel/Duel';
 
 function App() {
   return (

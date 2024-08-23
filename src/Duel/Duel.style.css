@@ -1,0 +1,13 @@
+.duel-canvas{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+} 
+.scoreboard{
+  background-color: white;
+  padding: 10px;
+  font-size: 1.5rem;
+  margin: 9px auto 14px auto;
+  width: fit-content;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
