@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import HeroMenu from '../HeroMenu/HeroMenu';
+import HeroMenu from '../ColorPicker/ColorPicker';
 import './Duel.style.css';
+import { Menu } from '../Menu/Menu';
+import ColorPicker from '../ColorPicker/ColorPicker';
 
 // Ширина полотна
 const WIDTH = 800;
@@ -12,8 +14,9 @@ const HERO_SIZE = 25;
 const SPELL_SIZE = HERO_SIZE / 4;
 
 export const Duel = () => {
-  // Открытие меню героя
-  const [menuVisible, setMenuVisible] = useState(false);
+  // Открытие выбора цвета героя
+  const [colorPickerPosition, setColorPickerPosition] = useState({ x: 0, y: 0 });
+  const [colorPickerVisible, setColorPickerVisible] = useState(false);
   // Текущий выбранный герой
   const [selectedHero, setSelectedHero] = useState(null);
   // Очки попаданий
@@ -33,7 +36,7 @@ export const Duel = () => {
       y: HEIGHT / 2,
       direction: 1,
       speed: 2,
-      attackSpeed: 5,
+      attackSpeed: 7,
       color: '#4410c7',
       spells: [],
     },
@@ -43,7 +46,7 @@ export const Duel = () => {
       y: HEIGHT / 2,
       direction: -1,
       speed: 2,
-      attackSpeed: 5,
+      attackSpeed: 7,
       color: '#ff0000',
       spells: [],
     },
@@ -191,9 +194,10 @@ export const Duel = () => {
   };
 
   // Обработчик клика по герою
-  const handleHeroClick = (hero) => {
+  const handleHeroClick = (hero, clickX, clickY) => {
     setSelectedHero(hero);
-    setMenuVisible(true);
+    setColorPickerPosition({ x: clickX, y: clickY });
+    setColorPickerVisible(true);
   };
 
   // Обработчик изменения цвета
@@ -227,7 +231,7 @@ export const Duel = () => {
     return distance < HERO_SIZE + SPELL_SIZE;
   };
   return (
-    <>
+    <div className="wrap-duel" style={{ width: WIDTH }}>
       <canvas
         ref={canvasRef}
         className="duel-canvas"
@@ -241,27 +245,28 @@ export const Duel = () => {
           heroesRef.current.forEach((hero) => {
             const distance = Math.sqrt((hero.x - clickX) ** 2 + (hero.y - clickY) ** 2);
             if (distance < HERO_SIZE * 3 + 40) {
-              handleHeroClick(hero);
+              handleHeroClick(hero, e.clientX, e.clientY);
             }
           });
         }}
       />
-      {/* Отображение счета */}
-      <div className="scoreboard">
-        Счет: {scores[0]} - {scores[1]}
-      </div>
-      {/* Меню для выбора настроек героя */}
-      {menuVisible && (
-        <>
-          <HeroMenu
-            hero={selectedHero}
-            onClose={() => setMenuVisible(false)}
-            onColorChange={handleColorChange}
-            onSpeedChange={handleSpeedChange}
-            onAttackSpeedChange={handleAttackSpeedChange}
-          />
-        </>
+      {/* Меню со счетом, а также с выбором скорости передвижения и стрельбы */}
+      <Menu
+        heroes={heroesRef.current}
+        scores={scores}
+        handleSpeedChange={handleSpeedChange}
+        handleAttackSpeedChange={handleAttackSpeedChange}
+      />
+      {/* Окно выбора цвета героя */}
+      {colorPickerVisible && (
+        <ColorPicker
+          hero={selectedHero}
+          x={colorPickerPosition.x}
+          y={colorPickerPosition.y}
+          onClose={() => setColorPickerVisible(false)}
+          onColorChange={(color) => handleColorChange(selectedHero.id, color)}
+        />
       )}
-    </>
+    </div>
   );
 };

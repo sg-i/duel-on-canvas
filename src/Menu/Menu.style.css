@@ -1,0 +1,22 @@
+.scoreboard{
+  background-color: white;
+  padding: 10px;
+  font-size: 1.5rem;
+  width: fit-content;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+  width: 100%;
+  padding-top: 10px;
+  max-width: fit-content;
+  margin: 0px auto;
+  font-family: 'Arial', sans-serif;
+
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+
+  gap: 15px;
+}

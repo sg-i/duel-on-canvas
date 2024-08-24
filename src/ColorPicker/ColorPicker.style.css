@@ -1,0 +1,25 @@
+.color-picker {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 15px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-picker input[type="color"] {
+  margin-right: 8px;
+}
+
+.color-picker button {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.color-picker button:hover {
+  background: #e0e0e0;
+}
